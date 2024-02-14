@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Free2Move", "Free2Move\Free2Move.csproj", "{ABBC919E-EEDD-4088-8A4F-319449E8E03D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildTasks", "MSBuildTasks\MSBuildTasks.csproj", "{691FB95C-455A-4C6A-B53B-CD619460A5C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		BuildTasks|Any CPU = BuildTasks|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABBC919E-EEDD-4088-8A4F-319449E8E03D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABBC919E-EEDD-4088-8A4F-319449E8E03D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABBC919E-EEDD-4088-8A4F-319449E8E03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABBC919E-EEDD-4088-8A4F-319449E8E03D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABBC919E-EEDD-4088-8A4F-319449E8E03D}.BuildTasks|Any CPU.ActiveCfg = BuildTasks|Any CPU
+		{691FB95C-455A-4C6A-B53B-CD619460A5C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691FB95C-455A-4C6A-B53B-CD619460A5C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691FB95C-455A-4C6A-B53B-CD619460A5C3}.BuildTasks|Any CPU.ActiveCfg = BuildTasks|Any CPU
+		{691FB95C-455A-4C6A-B53B-CD619460A5C3}.BuildTasks|Any CPU.Build.0 = BuildTasks|Any CPU
+	EndGlobalSection
+EndGlobal
