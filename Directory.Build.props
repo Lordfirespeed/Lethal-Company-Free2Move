@@ -56,7 +56,6 @@
         <ThunderstoreNamespace>Lordfirespeed</ThunderstoreNamespace>
         <ThunderstoreWebsiteUrl>$(RepositoryUrl)</ThunderstoreWebsiteUrl>
         <ThunderstoreReadmePath>../../README.md</ThunderstoreReadmePath>
-        <ThunderstoreIconPath>icons/in-deep.png</ThunderstoreIconPath>
         <ThunderstoreOutDir>../dist</ThunderstoreOutDir>
     </PropertyGroup>
 

@@ -9,6 +9,7 @@
 
         <ThunderstoreName>Free2Move</ThunderstoreName>
         <ThunderstoreDescription>$(Description)</ThunderstoreDescription>
+        <ThunderstoreIconPath>icons/free2move.png</ThunderstoreIconPath>
 
         <IsPackable>false</IsPackable>
         <IsThunderstorePackable>true</IsThunderstorePackable>
