@@ -91,10 +91,10 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
         FeatureInstance = new TFeature();
 
         Free2MovePlugin.Logger.LogDebug("Assigning logger...");
-        FeatureInstance.SetLogger(FeatureLogger);
+        FeatureInstance.Logger = FeatureLogger;
 
         Free2MovePlugin.Logger.LogDebug("Assigning harmony...");
-        FeatureInstance.SetHarmony(FeatureHarmony);
+        FeatureInstance.Harmony = FeatureHarmony;
     }
 
     private void Enable()
