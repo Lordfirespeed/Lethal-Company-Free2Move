@@ -30,7 +30,6 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     public string Name { get; set; }
     public Func<bool>? EnabledCondition { get; set; }
     public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
-    public string[] DelegateToModGuids { get; set; } = Array.Empty<string>();
     private readonly object _patchingLock = new();
     private Harmony? _featureHarmony;
     private ManualLogSource? _featureLogger;
