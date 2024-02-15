@@ -24,7 +24,16 @@ public class Free2MovePatcher : MonoBehaviour
     internal static Free2MoveConfig BoundConfig => Free2MovePlugin.BoundConfig;
 
     private readonly IList<IFeatureInfo<IFeature>> _features = [
-
+        new FeatureInfo<MoveInAnyDirection> {
+            Name = "Free Movement",
+            EnabledCondition = () => BoundConfig.Enabled.Value,
+            ListenToConfigEntries = [ BoundConfig.Enabled, ],
+        },
+        new FeatureInfo<MoveInCardinalDirections> {
+            Name = "Restrict Movement",
+            EnabledCondition = () => !BoundConfig.Enabled.Value,
+            ListenToConfigEntries = [ BoundConfig.Enabled, ],
+        },
     ];
 
     private void Start()
