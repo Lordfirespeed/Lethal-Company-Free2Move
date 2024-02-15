@@ -26,10 +26,9 @@ internal static class FeatureInfoInitializers
 
 internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : class, IFeature, new()
 {
-    // I want to use 'required' here but netstandard2.1 doesn't have support.
-    public string Name { get; set; }
-    public Func<bool>? EnabledCondition { get; set; }
-    public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
+    public required string Name { get; init; }
+    public Func<bool>? EnabledCondition { get; init; }
+    public ConfigEntryBase[] ListenToConfigEntries { get; init; } = Array.Empty<ConfigEntryBase>();
     private readonly object _patchingLock = new();
     private Harmony? _featureHarmony;
     private ManualLogSource? _featureLogger;
