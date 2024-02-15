@@ -1,3 +1,9 @@
+/*
+ * https://github.com/lc-sigurd/Sigurd/tree/87c45e93351a16d39223a524305a96eb03a8a472/MSBuildTasks
+ * The Sigurd Team licenses this file to Lordfirespeed under the LGPL-3.0-OR-LATER license.
+ * Lordfirespeed licenses this file to you under the LGPL-3.0-OR-LATER license.
+ */
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
