@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## v[0.1.2]
+- Add icon attributions to `README.md`
+
 ## v[0.1.1]
 - Fix `publish` GitHub workflow to upload `thunderstore.toml.user` file with the `thunderstore-build` artifact
 
