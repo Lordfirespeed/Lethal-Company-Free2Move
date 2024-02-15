@@ -13,36 +13,13 @@ public sealed class MoveInCardinalDirections : IFeature, IPlayerInputActionFeatu
 
     public void OnEnable()
     {
-        RemoveDirectBinding();
-        AddCompositeBinding();
+        ResetBindingMode();
     }
 
-    private void RemoveDirectBinding()
+    private void ResetBindingMode()
     {
-        var context = IPlayerInputActionFeature.PlayerMoveAction
-            .ChangeBindingWithPath("<Gamepad>/leftStick");
-
-        if (!context.valid) return;
-
-        context.Erase();
-    }
-
-    private void AddCompositeBinding()
-    {
-        var testContext = IPlayerInputActionFeature.PlayerMoveAction
-            .ChangeCompositeBinding("Gamepad");
-
-        if (testContext.valid) return;
-
-        var context = IPlayerInputActionFeature.PlayerMoveAction
-            .AddCompositeBinding("2DVector")
-            .With("up", "<Gamepad>/leftStick/up")
-            .With("down", "<Gamepad>/leftStick/down")
-            .With("left", "<Gamepad>/leftStick/left")
-            .With("right", "<Gamepad>/leftStick/right");
-
         IPlayerInputActionFeature.PlayerMoveAction
-            .ChangeCompositeBinding("2DVector")
-            .WithName("Gamepad");
+            .ChangeCompositeBinding("Gamepad")
+            .WithPath("2DVector");
     }
 }

@@ -13,28 +13,13 @@ public sealed class MoveInAnyDirection : IFeature, IPlayerInputActionFeature
 
     public void OnEnable()
     {
-        RemoveCompositeBinding();
-        AddDirectBinding();
+        SetAnalogBindingMode();
     }
 
-    private void RemoveCompositeBinding()
+    private void SetAnalogBindingMode()
     {
-        var context = IPlayerInputActionFeature.PlayerMoveAction
-            .ChangeCompositeBinding("Gamepad");
-
-        if (!context.valid) return;
-
-        context.Erase();
-    }
-
-    private void AddDirectBinding()
-    {
-        var existingBindingIndex = IPlayerInputActionFeature.PlayerMoveAction
-            .GetBindingIndex(path: "<Gamepad>/leftStick");
-
-        if (existingBindingIndex > 0) return;
-
         IPlayerInputActionFeature.PlayerMoveAction
-            .AddBinding("<Gamepad>/leftStick");
+            .ChangeCompositeBinding("Gamepad")
+            .WithPath("2DVector(mode=2)");
     }
 }
