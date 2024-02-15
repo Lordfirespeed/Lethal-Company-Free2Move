@@ -31,10 +31,10 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     public Func<bool>? EnabledCondition { get; set; }
     public ConfigEntryBase[] ListenToConfigEntries { get; set; } = Array.Empty<ConfigEntryBase>();
     public string[] DelegateToModGuids { get; set; } = Array.Empty<string>();
-    private object PatchingLock { get; } = new();
-    private Harmony? FeatureHarmony { get; set; }
-    private ManualLogSource? FeatureLogger { get; set; }
-    private TFeature? FeatureInstance { get; set; }
+    private readonly object _patchingLock = new();
+    private Harmony? _featureHarmony;
+    private ManualLogSource? _featureLogger;
+    private TFeature? _featureInstance;
     private readonly EventHandler<SettingChangedEventArgs> _onChangeEventHandler;
     private bool _disposed = false;
 
@@ -53,11 +53,11 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     {
         if (_disposed)
             throw new InvalidOperationException("FeatureInfo has already been disposed!.");
-        if (FeatureHarmony is not null)
+        if (_featureHarmony is not null)
             throw new InvalidOperationException("FeatureInfo has already been initialised!");
 
-        FeatureHarmony = FeatureInfoInitializers.HarmonyFactory(typeof(TFeature).Name);
-        FeatureLogger = FeatureInfoInitializers.LogSourceFactory(Name);
+        _featureHarmony = FeatureInfoInitializers.HarmonyFactory(typeof(TFeature).Name);
+        _featureLogger = FeatureInfoInitializers.LogSourceFactory(Name);
 
         ListenToConfigEntries
             .Do(entry => entry.ConfigFile.SettingChanged += _onChangeEventHandler);
@@ -68,12 +68,12 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     private void OnChange()
     {
         if (ShouldLoad) {
-            if (FeatureInstance is null) {
+            if (_featureInstance is null) {
                 Enable();
                 return;
             }
 
-            FeatureInstance!.OnConfigChange();
+            _featureInstance!.OnConfigChange();
             return;
         }
 
@@ -82,46 +82,46 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
 
     private void InstantiateFeature()
     {
-        if (FeatureHarmony is null)
+        if (_featureHarmony is null)
             throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Harmony instance.");
-        if (FeatureLogger is null)
+        if (_featureLogger is null)
             throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Logger instance.");
 
         Free2MovePlugin.Logger.LogDebug("Instantiating feature...");
-        FeatureInstance = new TFeature();
+        _featureInstance = new TFeature();
 
         Free2MovePlugin.Logger.LogDebug("Assigning logger...");
-        FeatureInstance.Logger = FeatureLogger;
+        _featureInstance.Logger = _featureLogger;
 
         Free2MovePlugin.Logger.LogDebug("Assigning harmony...");
-        FeatureInstance.Harmony = FeatureHarmony;
+        _featureInstance.Harmony = _featureHarmony;
     }
 
     private void Enable()
     {
-        lock (PatchingLock) {
-            if (FeatureHarmony is null)
+        lock (_patchingLock) {
+            if (_featureHarmony is null)
                 throw new Exception("FeatureInfo has not been initialised. Cannot patch without a Harmony instance.");
-            if (FeatureInstance is not null) return;
+            if (_featureInstance is not null) return;
 
             Free2MovePlugin.Logger.LogInfo($"Enabling {Name} feature...");
             InstantiateFeature();
-            FeatureInstance!.OnEnable();
-            FeatureHarmony.PatchAllWithNestedTypes(typeof(TFeature));
+            _featureInstance!.OnEnable();
+            _featureHarmony.PatchAllWithNestedTypes(typeof(TFeature));
         }
     }
 
     private void Disable()
     {
-        lock (PatchingLock) {
-            if (FeatureHarmony is null)
+        lock (_patchingLock) {
+            if (_featureHarmony is null)
                 throw new Exception("FeatureInfo has not been initialised. Cannot unpatch without a Harmony instance.");
-            if (FeatureInstance is null) return;
+            if (_featureInstance is null) return;
 
             Free2MovePlugin.Logger.LogInfo($"Disabling {Name} feature...");
-            FeatureHarmony.UnpatchSelf();
-            FeatureInstance.OnDisable();
-            FeatureInstance = null;
+            _featureHarmony.UnpatchSelf();
+            _featureInstance.OnDisable();
+            _featureInstance = null;
         }
     }
 
@@ -135,7 +135,7 @@ internal class FeatureInfo<TFeature> : IFeatureInfo<TFeature> where TFeature : c
     {
         if (_disposed) return;
 
-        if (disposing && FeatureHarmony is not null) {
+        if (disposing && _featureHarmony is not null) {
             ListenToConfigEntries
                 .Do(entry => entry.ConfigFile.SettingChanged -= _onChangeEventHandler);
             Disable();
