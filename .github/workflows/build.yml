@@ -42,9 +42,3 @@ jobs:
         with:
           name: build-artifacts
           path: ./*/dist/*.zip
-
-      - name: Upload nupkg artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: nupkg-build
-          path: ./*/bin/Release/*.nupkg
