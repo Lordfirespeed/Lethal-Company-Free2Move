@@ -12,8 +12,12 @@ using HarmonyLib;
 
 public interface IFeature
 {
-    public void SetLogger(ManualLogSource logger) { }
-    public void SetHarmony(Harmony harmony) { }
+    public ManualLogSource Logger {
+        set { }
+    }
+    public Harmony Harmony {
+        set { }
+    }
     public void OnEnable() { }
     public void OnDisable() { }
     public void OnConfigChange() { }
